@@ -38,16 +38,10 @@ struct list_t {
 	struct	list_t	*next;
 };
 
-/* see the stock upsset.conf for the whole rant on what this is */
-#define MAGIC_ENABLE_STRING "I_HAVE_SECURED_MY_CGI_DIRECTORY"
-
 #define HARD_UPSVAR_LIMIT_NUM	64
 #define HARD_UPSVAR_LIMIT_LEN	256
 
 static char	*monups, *username, *password, *function, *upscommand;
-
-/* set once the MAGIC_ENABLE_STRING is found in the upsset.conf */
-static int	magic_string_set = 0;
 
 static	uint16_t	port;
 static	char	*upsname, *hostname;
@@ -1012,65 +1006,6 @@ static void initial_pickups(void)
 	exit(EXIT_SUCCESS);
 }
 
-static void upsset_conf_err(const char *errmsg)
-{
-	upslogx(LOG_ERR, "Fatal error in parseconf(upsset.conf): %s", errmsg);
-}
-
-/* see if the user has confirmed their cgi directory's secure state */
-static void check_conf(void)
-{
-	char	fn[SMALLBUF];
-	PCONF_CTX_t	ctx;
-
-	snprintf(fn, sizeof(fn), "%s/upsset.conf", confpath());
-
-	pconf_init(&ctx, upsset_conf_err);
-
-	if (!pconf_file_begin(&ctx, fn)) {
-		pconf_finish(&ctx);
-
-		printf("<PRE>\n");
-		printf("Error: Can't open upsset.conf to verify security settings.\n");
-		printf("Refusing to start until this is fixed.\n");
-		printf("</PRE>\n");
-
-		/* leave something in the httpd log for the admin */
-		fprintf(stderr, "upsset.conf does not exist to permit execution\n");
-		exit(EXIT_FAILURE);
-	}
-
-	while (pconf_file_next(&ctx)) {
-		if (pconf_parse_error(&ctx)) {
-			upslogx(LOG_ERR, "Parse error: %s:%d: %s",
-				fn, ctx.linenum, ctx.errmsg);
-			continue;
-		}
-
-		if (ctx.numargs < 1)
-			continue;
-
-		if (!strcmp(ctx.arglist[0], MAGIC_ENABLE_STRING))
-			magic_string_set = 1;
-	}
-
-	pconf_finish(&ctx);
-
-	/* if we've been enabled, jump out of here and go to work */
-	if (magic_string_set == 1)
-		return;
-
-	printf("<PRE>\n");
-	printf("Error: Secure mode has not been enabled in upsset.conf.\n");
-	printf("Refusing to start until this is fixed.\n");
-	printf("</PRE>\n");
-
-	/* leave something in the httpd log for the admin */
-	fprintf(stderr, "upsset.conf does not permit execution\n");
-
-	exit(EXIT_FAILURE);
-}
-
 int main(int argc, char **argv)
 {
 	NUT_UNUSED_VARIABLE(argc);
@@ -1078,9 +1013,6 @@ int main(int argc, char **argv)
 	username = password = function = monups = NULL;
 
 	printf("Content-type: text/html\n\n");
-
-	/* see if the magic string is present in the config file */
-	check_conf();
 
 	/* see if there's anything waiting .. the server my not close STDIN properly */
 	if (1) {
