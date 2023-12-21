@@ -135,6 +135,13 @@ static info_lkp_t apcc_transfer_reasons[] = {
     { 10, "rateOfVoltageChange", NULL, NULL }
 };
 
+static info_lkp_t apcc_outlet_status[] = {
+    { 1, "on", NULL, NULL },
+    { 2, "off", NULL, NULL },
+    { 3, "unknown", NULL, NULL },
+    { 0, NULL, NULL, NULL }
+};
+
 /* --- */
 
 /* commands */
@@ -155,6 +162,7 @@ static snmp_info_t apcc_mib[] = {
 	{ "device.description", ST_FLAG_STRING | ST_FLAG_RW, SU_INFOSIZE, ".1.3.6.1.2.1.1.1.0", NULL, SU_FLAG_OK, NULL },
 	{ "device.contact", ST_FLAG_STRING | ST_FLAG_RW, SU_INFOSIZE, ".1.3.6.1.2.1.1.4.0", NULL, SU_FLAG_OK, NULL },
 	{ "device.location", ST_FLAG_STRING | ST_FLAG_RW, SU_INFOSIZE, ".1.3.6.1.2.1.1.6.0", NULL, SU_FLAG_OK, NULL },
+	{ "device.part", ST_FLAG_STRING | ST_FLAG_RW, SU_INFOSIZE, ".1.3.6.1.4.1.318.1.1.1.1.2.5.0", NULL, SU_FLAG_OK, NULL },
 
 	/* info elements. */
 	{ "ups.mfr", ST_FLAG_STRING, SU_INFOSIZE, NULL, "APC",
@@ -195,7 +203,9 @@ static snmp_info_t apcc_mib[] = {
 	{ "input.transfer.reason", ST_FLAG_STRING, 1, APCC_OID_TRANSFERREASON, "", SU_TYPE_INT | SU_FLAG_OK, apcc_transfer_reasons },
 	{ "input.sensitivity", ST_FLAG_STRING | ST_FLAG_RW, 1, APCC_OID_SENSITIVITY, "", SU_TYPE_INT | SU_FLAG_OK, apcc_sensitivity_modes },
 	{ "ups.power", 0, 1, ".1.3.6.1.4.1.318.1.1.1.4.2.9.0", "", SU_FLAG_OK, NULL },
+	{ "ups.power.nominal", 0, 1, ".1.3.6.1.2.1.33.1.9.5.0", "", SU_FLAG_OK, NULL },
 	{ "ups.realpower", 0, 1, ".1.3.6.1.4.1.318.1.1.1.4.2.8.0", "", SU_FLAG_OK, NULL },
+	{ "ups.realpower.nominal", 0, 1, ".1.3.6.1.2.1.33.1.9.6.0", "", SU_FLAG_OK, NULL },
 	{ "ups.status", ST_FLAG_STRING, SU_INFOSIZE, APCC_OID_POWER_STATUS, "OFF",
 		SU_FLAG_OK | SU_STATUS_PWR, apcc_pwr_info },
 	{ "ups.status", ST_FLAG_STRING, SU_INFOSIZE, APCC_OID_BATT_STATUS, "",
@@ -267,6 +277,16 @@ static snmp_info_t apcc_mib[] = {
 	{ "output.L2.power.minimum.percent", 0, 1, ".1.3.6.1.4.1.318.1.1.1.9.3.3.1.12.1.1.2", "", SU_FLAG_OK|SU_FLAG_NEGINVALID, NULL },
 	{ "output.L3.power.minimum.percent", 0, 1, ".1.3.6.1.4.1.318.1.1.1.9.3.3.1.12.1.1.3", "", SU_FLAG_OK|SU_FLAG_NEGINVALID, NULL },
 	{ "output.voltage.nominal", ST_FLAG_STRING | ST_FLAG_RW, 3, ".1.3.6.1.4.1.318.1.1.1.5.2.1.0", "", SU_TYPE_INT | SU_FLAG_OK, NULL },
+
+	{ "outlet.id", 0, 1, NULL, "0", SU_FLAG_STATIC , NULL },
+	{ "outlet.count", 0, 1, ".1.3.6.1.4.1.318.1.1.1.12.1.1.0", NULL, SU_FLAG_STATIC | SU_FLAG_OK, NULL },
+	{ "outlet.%i.id", 0, 1, ".1.3.6.1.4.1.318.1.1.1.12.1.2.1.1.%i", NULL, SU_FLAG_STATIC | SU_OUTLET | SU_FLAG_OK, NULL },
+	{ "outlet.%i.desc", ST_FLAG_STRING, 1, ".1.3.6.1.4.1.318.1.1.1.12.1.2.1.2.%i", NULL, SU_OUTLET | SU_FLAG_OK, NULL },
+	{ "outlet.%i.status", 0, 1, ".1.3.6.1.4.1.318.1.1.1.12.1.2.1.3.%i", NULL, SU_OUTLET | SU_FLAG_OK, apcc_outlet_status },
+
+	{ "outlet.%i.load.off", 0, 1, ".1.3.6.1.4.1.318.1.1.1.12.3.2.1.3.%i", "2", SU_TYPE_CMD | SU_OUTLET, NULL },
+	{ "outlet.%i.load.on", 0, 1, ".1.3.6.1.4.1.318.1.1.1.12.3.2.1.3.%i", "1", SU_TYPE_CMD | SU_OUTLET, NULL },
+	{ "outlet.%i.load.cycle", 0, 1, ".1.3.6.1.4.1.318.1.1.1.12.3.2.1.3.%i", "3", SU_TYPE_CMD | SU_OUTLET, NULL },
 
 	/* Measure-UPS ambient variables */
 	/* Environmental sensors (AP9612TH and others) */
