@@ -750,15 +750,15 @@ static void do_type(const char *varname)
 		}
 
 		if (!strncasecmp(answer[i], "STRING:", 7)) {
-			char	*ptr, len;
+			char	*ptr;
+			int	len;
 			long	l;
 
 			/* split out the :<len> data */
 			ptr = strchr(answer[i], ':');
 			*ptr++ = '\0';
 			l = strtol(ptr, (char **) NULL, 10);
-			assert(l <= 127);	/* FIXME: Loophole about longer numbers? Why are we limited to char at all here? */
-			len = (char)l;
+			len = (int)l;
 
 			do_string(varname, len);
 			return;
