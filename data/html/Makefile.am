@@ -1,7 +1,7 @@
 # Network UPS Tools: data/html
 # install these only if configured --with-cgi
 if WITH_CGI
- dist_html_DATA = index.html bottom.html nut-banner.png
+ dist_html_DATA = index.html bottom.html
  nodist_html_DATA = header.html
 endif
 EXTRA_DIST = README.adoc
