@@ -50,10 +50,11 @@ static int upsnotify_reported_disabled_systemd = 0;
 #  define DEBUG_SYSTEMD_WATCHDOG 0
 # endif
 #endif
+#ifdef HAVE_SYSTEMD
 /* Similarly for only reporting once if the notification subsystem is not built-in */
 static int upsnotify_reported_disabled_notech = 0;
 static int upsnotify_report_verbosity = -1;
-
+#endif
 /* the reason we define UPS_VERSION as a static string, rather than a
 	macro, is to make dependency tracking easier (only common.o depends
 	on nut_version_macro.h), and also to prevent all sources from
@@ -776,8 +777,9 @@ double difftimespec(struct timespec x, struct timespec y)
 /* Send (daemon) state-change notifications to an
  * external service management framework such as systemd
  */
-int upsnotify(upsnotify_state_t state, const char *fmt, ...)
+void upsnotify()
 {
+#ifdef HAVE_SYSTEMD
 	int ret = -127;
 	va_list va;
 	char	buf[LARGEBUF];
@@ -1166,6 +1168,7 @@ int upsnotify(upsnotify_state_t state, const char *fmt, ...)
 #endif
 
 	return ret;
+#endif /* HAVE_SYSTEMD */
 }
 
 void nut_report_config_flags(void)

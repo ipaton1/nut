@@ -278,8 +278,8 @@ typedef enum eupsnotify_state {
 	NOTIFY_STATE_WATCHDOG	/* Ping the framework that we are still alive */
 } upsnotify_state_t;
 /* Note: here fmt may be null, then the STATUS message would not be sent/added */
-int upsnotify(upsnotify_state_t state, const char *fmt, ...)
-	__attribute__ ((__format__ (__printf__, 2, 3)));
+void upsnotify();
+
 
 /* upslog*() messages are sent to syslog always;
  * their life after that is out of NUT's control */
