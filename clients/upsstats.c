@@ -889,8 +889,7 @@ static void display_tree(int verbose)
 		return;
 	}
 
-	printf("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\"\n");
-	printf("	\"http://www.w3.org/TR/REC-html40/loose.dtd\">\n");
+	printf("<!DOCTYPE html>");
 	printf("<HTML>\n");
 	printf("<HEAD><TITLE>upsstat: data tree of %s</TITLE></HEAD>\n", currups->desc);
 
