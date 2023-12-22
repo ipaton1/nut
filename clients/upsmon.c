@@ -755,7 +755,6 @@ static void doshutdown(void)
 
 	/* this should probably go away at some point */
 	upslogx(LOG_CRIT, "Executing automatic power-fail shutdown");
-	wall("Executing automatic power-fail shutdown\n");
 
 	do_notify(NULL, NOTIFY_SHUTDOWN);
 
