@@ -2453,6 +2453,7 @@ static void help(const char *arg_progname)
 #ifndef WIN32
 	printf("  -P <pid>	send the signal above to specified PID (bypassing PID file)\n");
 #endif
+	printf("  -f <file>	use <file> as the config file instead of upsmon.conf\n");
 	printf("  -D		raise debugging level (and stay foreground by default)\n");
 	printf("  -F		stay foregrounded even if no debugging is enabled\n");
 	printf("  -B		stay backgrounded even if debugging is bumped\n");

@@ -50,6 +50,9 @@ consulting the PID file.  This can help define service units which
 start main `upsmon` as a foreground process so it does not have to
 rely on a PID file.
 
+*-f* 'file'::
+Read file as the config file instead of upsmon.conf
+
 *-D*::
 Raise the debugging level.  upsmon will run in the foreground by default,
 and will print information on stdout about the monitoring process.
