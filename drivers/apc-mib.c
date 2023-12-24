@@ -170,6 +170,8 @@ static snmp_info_t apcc_mib[] = {
 	{ "ups.model", ST_FLAG_STRING, SU_INFOSIZE, ".1.3.6.1.4.1.318.1.1.1.1.1.1.0", "Generic Powernet SNMP device", SU_FLAG_STATIC | SU_FLAG_OK, NULL },
 	{ "ups.serial", ST_FLAG_STRING, SU_INFOSIZE, ".1.3.6.1.4.1.318.1.1.1.1.2.3.0", "", SU_FLAG_STATIC | SU_FLAG_OK, NULL },
 	{ "ups.mfr.date", ST_FLAG_STRING, SU_INFOSIZE, ".1.3.6.1.4.1.318.1.1.1.1.2.2.0", "", SU_FLAG_OK | SU_FLAG_STATIC, NULL },
+	{ "ups.date", ST_FLAG_STRING, SU_INFOSIZE, ".1.3.6.1.4.1.318.2.1.6.1.0", "1970-01-01", SU_FLAG_OK, NULL },
+	{ "ups.time", ST_FLAG_STRING, SU_INFOSIZE, ".1.3.6.1.4.1.318.2.1.6.2.0", "00:00:00", SU_FLAG_OK, NULL },
 	{ "input.voltage", 0, 0.1, ".1.3.6.1.4.1.318.1.1.1.3.3.1.0", "", SU_FLAG_OK | SU_FLAG_NEGINVALID | SU_FLAG_UNIQUE, NULL },
 	{ "input.voltage.maximum", 0, 0.1, ".1.3.6.1.4.1.318.1.1.1.3.3.2.0", "", SU_FLAG_OK | SU_FLAG_NEGINVALID | SU_FLAG_UNIQUE, NULL },
 	{ "input.voltage.minimum", 0, 0.1, ".1.3.6.1.4.1.318.1.1.1.3.3.3.0", "", SU_FLAG_OK | SU_FLAG_NEGINVALID | SU_FLAG_UNIQUE, NULL },
