@@ -116,7 +116,7 @@ typedef struct {
 #ifdef WIN32
 #define NOTIFY_DEFAULT	NOTIFY_SYSLOG
 #else
-#define NOTIFY_DEFAULT	(NOTIFY_SYSLOG | NOTIFY_WALL)
+#define NOTIFY_DEFAULT	NOTIFY_SYSLOG
 #endif
 
 /* This is only used in upsmon.c, but might it also have external consumers?..
