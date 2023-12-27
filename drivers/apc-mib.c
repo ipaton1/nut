@@ -310,6 +310,7 @@ static snmp_info_t apcc_mib[] = {
 /*	{ CMD_SDRET, 0, APCC_REBOOT_GRACEFUL, APCC_OID_REBOOT, "", SU_TYPE_CMD | SU_FLAG_OK, NULL }, */
 
 	{ "shutdown.return", 0, 1, ".1.3.6.1.4.1.318.1.1.1.6.1.1.0", "2", SU_TYPE_CMD | SU_FLAG_OK, NULL },
+	{ "shutdown.reboot", 0, 1, ".1.3.6.1.4.1.318.1.1.1.6.2.2.0", "2", SU_TYPE_CMD | SU_FLAG_OK, NULL },
 	{ "test.failure.start", 0, 1, ".1.3.6.1.4.1.318.1.1.1.6.2.4.0", "2", SU_TYPE_CMD | SU_FLAG_OK, NULL },
 	{ "test.panel.start", 0, 1, ".1.3.6.1.4.1.318.1.1.1.6.2.5.0", "2", SU_TYPE_CMD | SU_FLAG_OK, NULL },
 	{ "bypass.start", 0, 1, ".1.3.6.1.4.1.318.1.1.1.6.2.7.0", "2", SU_TYPE_CMD | SU_FLAG_OK, NULL },
