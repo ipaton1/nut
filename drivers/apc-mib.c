@@ -283,12 +283,21 @@ static snmp_info_t apcc_mib[] = {
 	{ "outlet.id", 0, 1, NULL, "0", SU_FLAG_STATIC , NULL },
 	{ "outlet.count", 0, 1, ".1.3.6.1.4.1.318.1.1.1.12.1.1.0", NULL, SU_FLAG_STATIC | SU_FLAG_OK, NULL },
 	{ "outlet.%i.id", 0, 1, ".1.3.6.1.4.1.318.1.1.1.12.1.2.1.1.%i", NULL, SU_FLAG_STATIC | SU_OUTLET | SU_FLAG_OK, NULL },
-	{ "outlet.%i.desc", ST_FLAG_STRING, 1, ".1.3.6.1.4.1.318.1.1.1.12.1.2.1.2.%i", NULL, SU_OUTLET | SU_FLAG_OK, NULL },
+	{ "outlet.%i.desc", ST_FLAG_STRING | ST_FLAG_RW, 16, ".1.3.6.1.4.1.318.1.1.1.12.1.2.1.2.%i", NULL, SU_OUTLET | SU_FLAG_OK, NULL },
 	{ "outlet.%i.status", 0, 1, ".1.3.6.1.4.1.318.1.1.1.12.1.2.1.3.%i", NULL, SU_OUTLET | SU_FLAG_OK, apcc_outlet_status },
 
-	{ "outlet.%i.load.off", 0, 1, ".1.3.6.1.4.1.318.1.1.1.12.3.2.1.3.%i", "2", SU_TYPE_CMD | SU_OUTLET, NULL },
+	{ "outlet.%i.delay.start", ST_FLAG_STRING | ST_FLAG_RW, 3, ".1.3.6.1.4.1.318.1.1.1.12.2.2.1.3.%i", NULL, SU_TYPE_INT | SU_OUTLET | SU_FLAG_OK, NULL },
+	{ "outlet.%i.delay.shutdown", ST_FLAG_STRING | ST_FLAG_RW, 3, ".1.3.6.1.4.1.318.1.1.1.12.2.2.1.4.%i", NULL, SU_TYPE_INT | SU_OUTLET | SU_FLAG_OK, NULL },
+	{ "outlet.%i.delay.reboot", ST_FLAG_STRING | ST_FLAG_RW, 3, ".1.3.6.1.4.1.318.1.1.1.12.2.2.1.5.%i", NULL, SU_TYPE_INT | SU_OUTLET | SU_FLAG_OK, NULL },
+	{ "outlet.%i.delay.return", ST_FLAG_STRING | ST_FLAG_RW, 3, ".1.3.6.1.4.1.318.1.1.1.12.2.2.1.6.%i", NULL, SU_TYPE_INT | SU_OUTLET | SU_FLAG_OK, NULL },
+
 	{ "outlet.%i.load.on", 0, 1, ".1.3.6.1.4.1.318.1.1.1.12.3.2.1.3.%i", "1", SU_TYPE_CMD | SU_OUTLET, NULL },
+	{ "outlet.%i.load.off", 0, 1, ".1.3.6.1.4.1.318.1.1.1.12.3.2.1.3.%i", "2", SU_TYPE_CMD | SU_OUTLET, NULL },
 	{ "outlet.%i.load.cycle", 0, 1, ".1.3.6.1.4.1.318.1.1.1.12.3.2.1.3.%i", "3", SU_TYPE_CMD | SU_OUTLET, NULL },
+	{ "outlet.%i.load.delayed.on", 0, 1, ".1.3.6.1.4.1.318.1.1.1.12.3.2.1.3.%i", "4", SU_TYPE_CMD | SU_OUTLET, NULL },
+	{ "outlet.%i.load.delayed.off", 0, 1, ".1.3.6.1.4.1.318.1.1.1.12.3.2.1.3.%i", "5", SU_TYPE_CMD | SU_OUTLET, NULL },
+	{ "outlet.%i.load.immediate.rebootshutdown", 0, 1, ".1.3.6.1.4.1.318.1.1.1.12.3.2.1.3.%i", "9", SU_TYPE_CMD | SU_OUTLET, NULL },
+	{ "outlet.%i.load.delayed.rebootshutdown", 0, 1, ".1.3.6.1.4.1.318.1.1.1.12.3.2.1.3.%i", "10", SU_TYPE_CMD | SU_OUTLET, NULL },
 
 	/* Measure-UPS ambient variables */
 	/* Environmental sensors (AP9612TH and others) */
