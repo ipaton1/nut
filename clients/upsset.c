@@ -771,7 +771,7 @@ static void print_rw(const char *arg_upsname, const char *varname)
 
 	printf("<!-- <TR><TD>Device</TD><TD>%s</TD></TR> -->\n", arg_upsname);
 
-	printf("<TR BGCOLOR=\"#60B0B0\" ALIGN=\"CENTER\">\n");
+	printf("<TR BGCOLOR=\"#60B0B0\" ALIGN=\"LEFT\">\n");
 
 	printf("<TD>");
 
