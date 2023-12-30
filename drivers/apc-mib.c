@@ -205,9 +205,9 @@ static snmp_info_t apcc_mib[] = {
 	{ "input.transfer.reason", ST_FLAG_STRING, 1, APCC_OID_TRANSFERREASON, "", SU_TYPE_INT | SU_FLAG_OK, apcc_transfer_reasons },
 	{ "input.sensitivity", ST_FLAG_STRING | ST_FLAG_RW, 1, APCC_OID_SENSITIVITY, "", SU_TYPE_INT | SU_FLAG_OK, apcc_sensitivity_modes },
 	{ "ups.power", 0, 1, ".1.3.6.1.4.1.318.1.1.1.4.2.9.0", "", SU_FLAG_OK, NULL },
-	{ "ups.power.nominal", 0, 1, ".1.3.6.1.2.1.33.1.9.5.0", "", SU_FLAG_OK, NULL },
+	{ "ups.power.nominal", 0, 1, ".1.3.6.1.2.1.33.1.9.5.0", "", SU_FLAG_OK | SU_FLAG_ZEROINVALID | SU_FLAG_STATIC, NULL },
 	{ "ups.realpower", 0, 1, ".1.3.6.1.4.1.318.1.1.1.4.2.8.0", "", SU_FLAG_OK, NULL },
-	{ "ups.realpower.nominal", 0, 1, ".1.3.6.1.2.1.33.1.9.6.0", "", SU_FLAG_OK, NULL },
+	{ "ups.realpower.nominal", 0, 1, ".1.3.6.1.2.1.33.1.9.6.0", "", SU_FLAG_OK | SU_FLAG_ZEROINVALID | SU_FLAG_STATIC, NULL },
 	{ "ups.status", ST_FLAG_STRING, SU_INFOSIZE, APCC_OID_POWER_STATUS, "OFF",
 		SU_FLAG_OK | SU_STATUS_PWR, apcc_pwr_info },
 	{ "ups.status", ST_FLAG_STRING, SU_INFOSIZE, APCC_OID_BATT_STATUS, "",
@@ -301,15 +301,15 @@ static snmp_info_t apcc_mib[] = {
 
 	/* Measure-UPS ambient variables */
 	/* Environmental sensors (AP9612TH and others) */
-	{ "ambient.temperature", 0, 1, ".1.3.6.1.4.1.318.1.1.2.1.1.0", "", SU_FLAG_OK, NULL },
+	{ "ambient.temperature", 0, 1, ".1.3.6.1.4.1.318.1.1.2.1.1.0", "", SU_FLAG_OK | SU_FLAG_ZEROINVALID | SU_FLAG_NAINVALID, NULL },
 	{ "ambient.1.temperature.alarm.high", 0, 1, ".1.3.6.1.4.1.318.1.1.10.1.2.2.1.3.1", "", SU_FLAG_OK, NULL },
 	{ "ambient.1.temperature.alarm.low", 0, 1, ".1.3.6.1.4.1.318.1.1.10.1.2.2.1.4.1", "", SU_FLAG_OK, NULL },
-	{ "ambient.humidity", 0, 1, ".1.3.6.1.4.1.318.1.1.2.1.2.0", "", SU_FLAG_OK, NULL },
+	{ "ambient.humidity", 0, 1, ".1.3.6.1.4.1.318.1.1.2.1.2.0", "", SU_FLAG_OK | SU_FLAG_ZEROINVALID | SU_FLAG_NAINVALID, NULL },
 	{ "ambient.1.humidity.alarm.high", 0, 1, ".1.3.6.1.4.1.318.1.1.10.1.2.2.1.6.1", "", SU_FLAG_OK, NULL },
 	{ "ambient.1.humidity.alarm.low", 0, 1, ".1.3.6.1.4.1.318.1.1.10.1.2.2.1.7.1", "", SU_FLAG_OK, NULL },
 	/* IEM: integrated environment monitor probe */
-	{ "ambient.temperature", 0, 1, APCC_OID_IEM_TEMP, "", SU_FLAG_OK, NULL },
-	{ "ambient.humidity", 0, 1, APCC_OID_IEM_HUMID, "", SU_FLAG_OK, NULL },
+	{ "ambient.temperature", 0, 1, APCC_OID_IEM_TEMP, "", SU_FLAG_OK | SU_FLAG_ZEROINVALID | SU_FLAG_NAINVALID, NULL },
+	{ "ambient.humidity", 0, 1, APCC_OID_IEM_HUMID, "", SU_FLAG_OK | SU_FLAG_ZEROINVALID | SU_FLAG_NAINVALID, NULL },
 
 	/* instant commands. */
 	{ "load.off", 0, 1, ".1.3.6.1.4.1.318.1.1.1.6.2.1.0", "2", SU_TYPE_CMD | SU_FLAG_OK, NULL },
