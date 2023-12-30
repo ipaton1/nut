@@ -45,7 +45,7 @@ th, td{padding:0.5ex;}
 
 <table>
 <tr>
-<th COLSPAN="10" style="background:#60B0B0;">
+<th COLSPAN="14" style="background:#60B0B0;">
 
 <span style="font-size:1.5em">Network UPS Tools upsstats
 @VERSION@
@@ -65,8 +65,12 @@ th, td{padding:0.5ex;}
 <th COLSPAN="1">Input (VAC)</th>
 <th COLSPAN="1">Output (VAC)</th>
 <th COLSPAN="1">Load (%)</th>
+<th COLSPAN="1">Load (VA)</th>
+<th COLSPAN="1">Load (W)</th>
 <th COLSPAN="1">UPS<br>Temp</th>
+<th COLSPAN="1">Ambient<br>Temp</th>
 <th COLSPAN="1">Battery<br>Runtime</th>
+<th COLSPAN="1">Battery<br>Pack(s)</th>
 <th COLSPAN="1">Data<br>Tree</th>
 </tr>
 
@@ -154,7 +158,16 @@ th, td{padding:0.5ex;}
 @ELSE@
 @IFSUPP ups.load@
 @VAR ups.load@
-%
+@ENDIF@
+</td>
+<td class="t2">
+@IFSUPP ups.power@
+@VAR ups.power@
+@ENDIF@
+</td>
+<td class="t2">
+@IFSUPP ups.realpower@
+@VAR ups.realpower@
 @ENDIF@
 </td>
 
@@ -170,8 +183,22 @@ th, td{padding:0.5ex;}
 </td>
 
 <td class="t2">
+@IFSUPP ambient.temperature@
+@AMBTEMP@
+@DEGREES@
+@ENDIF@
+</td>
+
+
+<td class="t2">
 @IFSUPP battery.runtime@
 @RUNTIME@
+@ENDIF@
+</td>
+
+<td class="t2">
+@IFSUPP battery.packs@
+@VAR battery.packs@
 @ENDIF@
 </td>
 
